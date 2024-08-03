@@ -26,7 +26,7 @@ def main():
     setup_logger()
     seed_packages()
     dataset_training = create_labeled_dataset()
-    dataset_evaluation = create_labeled_dataset(200)
+    dataset_evaluation = create_labeled_dataset(1500)
 
     visualise_data(dataset_training)
 
@@ -36,6 +36,9 @@ def main():
     classifier = NaiveBayesClassifier(x1_bins, x2_bins)
     classifier.learn(dataset_training)
     training_result = classifier.get_training_result()
+
+    visualise_data(dataset_evaluation)
+
 
     evaluator = NaiveBayesEvaluator(x1_bins, x2_bins, training_result)
     evaluator.evaluate(dataset_evaluation)

@@ -52,6 +52,7 @@ class NaiveBayesClassifier:
         self._training_result = TrainingResult(training_result.class_probs_dict.copy(),
                                                training_result.cond_probs.copy())
 
+
 class NaiveBayesTrainer:
     @staticmethod
     def additive_smoothing(absolute_frequency: int, tot_num_events, num_features: int, pseudocount: float = 1) -> float:

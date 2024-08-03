@@ -25,3 +25,22 @@ class NaiveBayesEvaluator:
     def evaluate(self, data: np.ndarray):
         logging.info('')
         logging.info('asd')
+
+        corr_pred_counter = 0
+
+        for item in data:
+            input = item[0:2]
+            label = int(item[2])
+            result = int(float(self._predictor.predict(input)))
+
+            make exact evaluation here!
+
+            if result == 1:
+                print(label)
+
+            corr_pred_counter += int(result == label)
+
+        print(corr_pred_counter)
+
+
+
