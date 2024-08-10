@@ -23,7 +23,7 @@ class DataGenerator:
         n = len(data)
         labels = np.zeros(n, dtype=np.int8)
         for i in range(0, n):
-            labels[i] = int(indicator_func(data[i, :]))
+            labels[i] = 1 - int(indicator_func(data[i, :]))
         return labels
 
     @staticmethod

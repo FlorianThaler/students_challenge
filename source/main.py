@@ -39,18 +39,8 @@ def main():
 
     visualise_data(dataset_evaluation)
 
-
     evaluator = NaiveBayesEvaluator(x1_bins, x2_bins, training_result)
     evaluator.evaluate(dataset_evaluation)
-
-    #
-    #
-    # x = np.array([0.21, 0.87])
-    # # x = np.array([0.5, 0.5])
-    #
-    # result = classifier.predict(x)
-    # logging.info('# ### ###############################################################')
-    # logging.info('classified ({:f}, {:f}) as: {:s}'.format(x[0], x[1], result))
 
 
 if __name__ == '__main__':
