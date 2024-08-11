@@ -1,0 +1,40 @@
+\documentclass{article}
+
+% %%% import packages
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+
+% %%% title page
+
+%\subject{Siemens student's challenge}
+\title{Solution approach and numerical results}
+\author{Florian Thaler}
+\date{Graz, 2024}
+
+
+% %%% define custom commands
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% %%% main document
+
+\begin{document}
+
+    \maketitle
+
+    \tableofcontents
+    \newpage
+    \section{Bayes classification}
+        \input{bayes_classification}
+        \newpage
+
+    \section{Numerical results}
+%        \input{numerical_results}
+        \newpage
+
+    \bibliographystyle{plain}
+    \bibliography{myBib}
+
+\end{document}

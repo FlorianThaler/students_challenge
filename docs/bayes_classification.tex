@@ -1,0 +1,63 @@
+\subsection{Modelling}
+
+	Let $\mathcal{I}=[0, 1]^{2}$ let $S\subset\Omega$ as in the task description. Let $\mathcal{Q}$ be a probability distribution on 
+	$\mathcal{I}$ and let $x_{1}, \ldots, x_{n}$ be samples from $\mathcal{Q}$. Let us model these samples as realisations of 
+	$\mathcal{I}$-valued random variables $X_{1}, \ldots, X_{n}$ defined on the probability space 
+	$(\Omega, \mathcal{A}, \mathcal{P})$. Thus, $P_{X_{j}} = \mathcal{Q}$ for $j = 1, \ldots, n$.
+	
+	The classification task described in the task description is modelled by means of the indicator function 
+	$f:\mathcal{I}\rightarrow\mathbb{R}$, where
+	\begin{align*}
+		f(x) = 1 \text{ if } x\in S, f(x) = 0 \text{ if } x\notin S.
+	\end{align*}
+	
+	Given a further realisation $x_{n + 1}$ of $\mathcal{Q}$ we aim to find an approach to classify $x_{n + 1}$ w.r.t. to 
+	$f$, i.e. we aim to find a rule to infer if $x_{n + 1}$ belongs to $S$ or not. As above, let us model $x_{n + 1}$ as realisation 
+	of the random variable $X_{n + 1}$, where $P_{X_{n + 1}} = \mathcal{Q}$. Then we classify $x_{n + 1}$ by means of the policy
+	\begin{align}\label{eq:dec_rule}
+		\argmax_{y\in\{0, 1\}} P(f(X_{n + 1}) = 1 | X_{1} = x_{1}, \ldots, X_{n} = x_{n}) 
+	\end{align}
+	
+	
+\subsection{Some header ...}
+		
+	Given Borel-sets $B_{1}, \ldots, B_{N}\subset\mathbb{R}^{2}$, a Borel-set $C\subset\mathbb{R}$ and defining $Y_{n + 1} = f(X_{n + 1})$ 
+	we get according to Bayes' Theorem
+	\begin{align*}
+	  \mathcal{P}&(Y_{n + 1}\in C, X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}) \\
+			&= \mathcal{P}(X_{1}\in B_{1}|X_{2}\in B_{2}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\ 
+						& ~~~~~ \cdot	\mathcal{P}(X_{2}\in B_{2}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\
+			&= \mathcal{P}(X_{1}\in B_{1}|X_{2}\in B_{2}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\
+						& ~~~~~ \cdot \mathcal{P}(X_{2}\in B_{2}|X_{3}\in B_{3}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\
+						& ~~~~~ \cdot \mathcal{P}(X_{3}\in B_{3}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C).
+	\end{align*}
+  After finitely many steps we obtain
+	\begin{align}\label{eq:joint_prob}
+	  \mathcal{P}&(Y_{n + 1}\in C, X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}) \nonumber\\
+			&=(\prod_{j = 1}^{n - 1}\mathcal{P}(X_{j}\in B_{j}|X_{j + 1}\in B_{j + 1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C)) \nonumber\\
+						& ~~~~~	\cdot\mathcal{P}(X_{n}\in B_{n}|Y_{n + 1}\in C)\cdot\mathcal{P}(Y_{n + 1}\in C).
+	\end{align}
+  Let us assume that for all $j = 1, \ldots, n$ the random variables $X_{j}, \ldots, X_{n}$ are conditional independent given 
+	$Y_{n + 1}$, i.e.
+	\begin{align*}
+		\mathcal{P}(X_{j}\in B_{j} | X_{j + 1}\in B_{j + 1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) = \mathcal{P}(X_{j}\in B_{j} | Y_{n + 1}\in C).
+	\end{align*}
+	Using this property equation we can rewrite equation (\ref{eq:joint_prob}) as follows
+	\begin{align*}
+		\mathcal{P}&(X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\
+			&= \mathcal{P}(Y_{n + 1}\in C)\prod_{j = 1}^{n}\mathcal{P}(X_{j}\in B_{j}|Y_{n + 1}\in C).
+	\end{align*}
+	Assuming that $\alpha=\mathcal{P}(X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) > 0$, we get
+	\begin{align*}
+		\mathcal{P}&(Y_{n + 1}\in C|X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}) \\
+			&= \alpha^{-1}\mathcal{P}(Y_{n + 1}\in C)\prod_{j = 1}^{n}\mathcal{P}(X_{j}\in B_{j}|Y_{n + 1}\in C).
+	\end{align*}
+  Consequently we rewrite the decision rule (\ref{eq:dec_rule}) as follows
+	\begin{align}
+		\argmax_{y\in\{0, 1\}} P(Y_{n + 1} = y) \prod_{j = 1}^{n}\mathcal{P}(X_{j}=x_{j}|Y_{n + 1}=y).
+	\end{align}
+	
+	
+	
+	
+
