@@ -19,8 +19,24 @@
 	\end{align}
 	
 	
-\subsection{Some header ...}
-		
+\subsection{Decision rule}
+	
+  Let us make the following assumptions
+
+  \begin{myAssmptn}\label{assmptn:cond_independence}
+    For all $j\in\{1, \ldots, n\}$ the random variables $X_{j}, \ldots, X_{n}$ are conditional independent given 
+  	$Y_{n + 1}$, i.e.
+  	\begin{align*}
+	  	\mathcal{P}(X_{j}\in B_{j} | X_{j + 1}\in B_{j + 1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) = \mathcal{P}(X_{j}\in B_{j} | Y_{n + 1}\in C).
+  	\end{align*}
+	\end{myAssmptn}
+
+  \begin{myAssmptn}\label{assmptn:joint_prob}
+    For all Borel sets $B_{1}, \ldots, B_{N}\subset\mathbb{R}^{2}$, $C\subset\mathbb{R}$ the joint probability 
+		$\mathcal{P}(X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C)$ is larger than zero.
+	\end{myAssmptn}
+
+	
 	Given Borel-sets $B_{1}, \ldots, B_{N}\subset\mathbb{R}^{2}$, a Borel-set $C\subset\mathbb{R}$ and defining $Y_{n + 1} = f(X_{n + 1})$ 
 	we get according to Bayes' Theorem
 	\begin{align*}
@@ -37,27 +53,34 @@
 			&=(\prod_{j = 1}^{n - 1}\mathcal{P}(X_{j}\in B_{j}|X_{j + 1}\in B_{j + 1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C)) \nonumber\\
 						& ~~~~~	\cdot\mathcal{P}(X_{n}\in B_{n}|Y_{n + 1}\in C)\cdot\mathcal{P}(Y_{n + 1}\in C).
 	\end{align}
-  Let us assume that for all $j = 1, \ldots, n$ the random variables $X_{j}, \ldots, X_{n}$ are conditional independent given 
-	$Y_{n + 1}$, i.e.
-	\begin{align*}
-		\mathcal{P}(X_{j}\in B_{j} | X_{j + 1}\in B_{j + 1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) = \mathcal{P}(X_{j}\in B_{j} | Y_{n + 1}\in C).
-	\end{align*}
-	Using this property equation we can rewrite equation (\ref{eq:joint_prob}) as follows
+			%  Let us assume that for all $j = 1, \ldots, n$ the random variables $X_{j}, \ldots, X_{n}$ are conditional independent given 
+			%	$Y_{n + 1}$, i.e.
+			%	\begin{align*}
+			%		\mathcal{P}(X_{j}\in B_{j} | X_{j + 1}\in B_{j + 1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) = \mathcal{P}(X_{j}\in B_{j} | Y_{n + 1}\in C).
+			%	\end{align*}
+	Using Assumption \ref{assmptn:cond_independence} we rewrite equation (\ref{eq:joint_prob}) as follows
 	\begin{align*}
 		\mathcal{P}&(X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\
 			&= \mathcal{P}(Y_{n + 1}\in C)\prod_{j = 1}^{n}\mathcal{P}(X_{j}\in B_{j}|Y_{n + 1}\in C).
 	\end{align*}
-	Assuming that $\alpha=\mathcal{P}(X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) > 0$, we get
+  Let $\alpha(B_{1}, \ldots, B_{n}, C)=\mathcal{P}(X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C)$. Using 
+  Assumption \ref{assmptn:joint_prob} we get
 	\begin{align*}
 		\mathcal{P}&(Y_{n + 1}\in C|X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}) \\
-			&= \alpha^{-1}\mathcal{P}(Y_{n + 1}\in C)\prod_{j = 1}^{n}\mathcal{P}(X_{j}\in B_{j}|Y_{n + 1}\in C).
+			&= \alpha(B_{1}, \ldots, B_{n}, C)^{-1}\mathcal{P}(Y_{n + 1}\in C)\prod_{j = 1}^{n}\mathcal{P}(X_{j}\in B_{j}|Y_{n + 1}\in C).
 	\end{align*}
   Consequently we rewrite the decision rule (\ref{eq:dec_rule}) as follows
-	\begin{align}
-		\argmax_{y\in\{0, 1\}} P(Y_{n + 1} = y) \prod_{j = 1}^{n}\mathcal{P}(X_{j}=x_{j}|Y_{n + 1}=y).
+	\begin{align}\label{eq:dec_rule_updated_I}
+		\argmax_{y\in\{0, 1\}} \mathcal{P}(Y_{n + 1} = y) \prod_{j = 1}^{n}\mathcal{P}(X_{j}=x_{j}|Y_{n + 1}=y).
 	\end{align}
+  
 	
-	
+\subsection{Towards a numerical method}
+
+	To use decision rule (\ref{eq:dec_rule_updated_I}) in a concrete scenario - as in the task description - we need to make assumptions on
+  the conditional probabilities $\mathcal{P}(X_{j} = x_{j}|Y_{n + 1} = y)$.
+
+  
 	
 	
 
