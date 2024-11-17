@@ -1,86 +1,77 @@
-\subsection{Modelling}
+Let $X=(X_{1}, \ldots, X_{d})$ be a $\mathbb{R}^{d}$-valued discrete random vector and let $Y$ be a real-valued discrete random variable taking values in $C$. Given a realisation $x = (x_{1}, \ldots, x_{d})\in\mathbb{R}^{d}$, we aim to classify $x$ w.r.t. the classes $y\in C$ according to the policy
+\begin{align}\label{eq:dec_rule}
+	\argmax_{y\in C} P(Y = y | X_{1} = x_{1}, \ldots, X_{n} = x_{n}).
+\end{align}
+To simplify this decision rule, we make the following assumptions
 
-	Let $\mathcal{I}=[0, 1]^{2}$ let $S\subset\Omega$ as in the task description. Let $\mathcal{Q}$ be a probability distribution on 
-	$\mathcal{I}$ and let $x_{1}, \ldots, x_{n}$ be samples from $\mathcal{Q}$. Let us model these samples as realisations of 
-	$\mathcal{I}$-valued random variables $X_{1}, \ldots, X_{n}$ defined on the probability space 
-	$(\Omega, \mathcal{A}, \mathcal{P})$. Thus, $P_{X_{j}} = \mathcal{Q}$ for $j = 1, \ldots, n$.
-	
-	The classification task described in the task description is modelled by means of the indicator function 
-	$f:\mathcal{I}\rightarrow\mathbb{R}$, where
-	\begin{align*}
-		f(x) = 1 \text{ if } x\in S, f(x) = 0 \text{ if } x\notin S.
-	\end{align*}
-	
-	Given a further realisation $x_{n + 1}$ of $\mathcal{Q}$ we aim to find an approach to classify $x_{n + 1}$ w.r.t. to 
-	$f$, i.e. we aim to find a rule to infer if $x_{n + 1}$ belongs to $S$ or not. As above, let us model $x_{n + 1}$ as realisation 
-	of the random variable $X_{n + 1}$, where $P_{X_{n + 1}} = \mathcal{Q}$. Then we classify $x_{n + 1}$ by means of the policy
-	\begin{align}\label{eq:dec_rule}
-		\argmax_{y\in\{0, 1\}} P(f(X_{n + 1}) = 1 | X_{1} = x_{1}, \ldots, X_{n} = x_{n}) 
-	\end{align}
-	
-	
-\subsection{Decision rule}
-	
-  Let us make the following assumptions
+\begin{myAssmptn}\label{assmptn:cond_independence}
+For all $j\in\{1, \ldots, d\}$ the random variables $X_{j}, \ldots, X_{d}$ are conditional independent given $Y$, i.e. for all sets $B_{j}, \ldots, B_{d} \subset\mathbb{R}$ and $D\subset C$ it holds
+ 	\begin{align*}
+  	\mathcal{P}(X_{j}\in B_{j} | X_{j + 1}\in B_{j + 1}, \ldots, X_{n}\in B_{n}, Y\in D) 
+		= \mathcal{P}(X_{j}\in B_{j} | Y\in D).
+ 	\end{align*}
+\end{myAssmptn}
 
-  \begin{myAssmptn}\label{assmptn:cond_independence}
-    For all $j\in\{1, \ldots, n\}$ the random variables $X_{j}, \ldots, X_{n}$ are conditional independent given 
-  	$Y_{n + 1}$, i.e.
-  	\begin{align*}
-	  	\mathcal{P}(X_{j}\in B_{j} | X_{j + 1}\in B_{j + 1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) = \mathcal{P}(X_{j}\in B_{j} | Y_{n + 1}\in C).
-  	\end{align*}
-	\end{myAssmptn}
+\begin{myAssmptn}\label{assmptn:joint_prob}
+  For all sets $B_{1}, \ldots, B_{d}\subset\mathbb{R}$, and all $D\subset C$ the joint probability 
+  $\mathcal{P}(X_{1}\in B_{1}, \ldots, X_{d}\in B_{d}, Y\in D )$ is larger than zero.
+\end{myAssmptn}
 
-  \begin{myAssmptn}\label{assmptn:joint_prob}
-    For all Borel sets $B_{1}, \ldots, B_{N}\subset\mathbb{R}^{2}$, $C\subset\mathbb{R}$ the joint probability 
-		$\mathcal{P}(X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C)$ is larger than zero.
-	\end{myAssmptn}
-
-	
-	Given Borel-sets $B_{1}, \ldots, B_{N}\subset\mathbb{R}^{2}$, a Borel-set $C\subset\mathbb{R}$ and defining $Y_{n + 1} = f(X_{n + 1})$ 
-	we get according to Bayes' Theorem
+Let $B_{1}, \ldots, B_{d}\subset\mathbb{R}$, and let $D\subset C$. According to Bayes' Theorem  we get
+\begin{align*}
+  \mathcal{P}&(Y\in D, X_{1}\in B_{1}, \ldots, X_{d}\in B_{d}) \\
+		&= \mathcal{P}(X_{1}\in B_{1}|X_{2}\in B_{2}, \ldots, X_{d}\in B_{d}, Y\in D) \\ 
+					& ~~~~~ \cdot	\mathcal{P}(X_{2}\in B_{2}, \ldots, X_{d}\in B_{d}, Y\in D) \\
+		&= \mathcal{P}(X_{1}\in B_{1}|X_{2}\in B_{2}, \ldots, X_{d}\in B_{d}, Y\in D) \\
+					& ~~~~~ \cdot \mathcal{P}(X_{2}\in B_{2}|X_{3}\in B_{3}, \ldots, X_{d}\in B_{d}, Y\in D) \\
+					& ~~~~~ \cdot \mathcal{P}(X_{3}\in B_{3}, \ldots, X_{d}\in B_{d}, Y\in D).
+\end{align*}
+After finitely many steps we obtain
+\begin{align}\label{eq:joint_prob}
+  \mathcal{P}&(Y\in D, X_{1}\in B_{1}, \ldots, X_{d}\in B_{d}) \nonumber\\
+		&=(\prod_{j = 1}^{d - 1}\mathcal{P}(X_{j}\in B_{j}|X_{j + 1}\in B_{j + 1}, \ldots, X_{d}\in B_{d}, Y\in D)) \nonumber\\
+		& ~~~~~	\cdot\mathcal{P}(X_{d}\in B_{d}|Y\in D)\cdot\mathcal{P}(Y\in D).
+\end{align}
+Using Assumption \ref{assmptn:cond_independence}, equation (\ref{eq:joint_prob}) reads as follows
+\begin{align*}
+	\mathcal{P}&(Y\in D, X_{1}\in B_{1}, \ldots, X_{n}\in B_{d}) \\
+		&= \mathcal{P}(Y\in D)\prod_{j = 1}^{d}\mathcal{P}(X_{j}\in B_{j}|Y\in D).
+\end{align*}
+Let $\alpha(B_{1}, \ldots, B_{d}, D)=\mathcal{P}(X_{1}\in B_{1}, \ldots, X_{d}\in B_{n}, Y\in D)$. Using Assumption \ref{assmptn:joint_prob} we get
 	\begin{align*}
-	  \mathcal{P}&(Y_{n + 1}\in C, X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}) \\
-			&= \mathcal{P}(X_{1}\in B_{1}|X_{2}\in B_{2}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\ 
-						& ~~~~~ \cdot	\mathcal{P}(X_{2}\in B_{2}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\
-			&= \mathcal{P}(X_{1}\in B_{1}|X_{2}\in B_{2}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\
-						& ~~~~~ \cdot \mathcal{P}(X_{2}\in B_{2}|X_{3}\in B_{3}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\
-						& ~~~~~ \cdot \mathcal{P}(X_{3}\in B_{3}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C).
+		\mathcal{P}&(Y\in D|X_{1}\in B_{1}, \ldots, X_{d}\in B_{d}) \\
+			&= \alpha(B_{1}, \ldots, B_{d}, C)^{-1}\mathcal{P}(Y\in D)\prod_{j = 1}^{d}\mathcal{P}(X_{j}\in B_{j}|Y\in D).
 	\end{align*}
-  After finitely many steps we obtain
-	\begin{align}\label{eq:joint_prob}
-	  \mathcal{P}&(Y_{n + 1}\in C, X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}) \nonumber\\
-			&=(\prod_{j = 1}^{n - 1}\mathcal{P}(X_{j}\in B_{j}|X_{j + 1}\in B_{j + 1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C)) \nonumber\\
-						& ~~~~~	\cdot\mathcal{P}(X_{n}\in B_{n}|Y_{n + 1}\in C)\cdot\mathcal{P}(Y_{n + 1}\in C).
-	\end{align}
-			%  Let us assume that for all $j = 1, \ldots, n$ the random variables $X_{j}, \ldots, X_{n}$ are conditional independent given 
-			%	$Y_{n + 1}$, i.e.
-			%	\begin{align*}
-			%		\mathcal{P}(X_{j}\in B_{j} | X_{j + 1}\in B_{j + 1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) = \mathcal{P}(X_{j}\in B_{j} | Y_{n + 1}\in C).
-			%	\end{align*}
-	Using Assumption \ref{assmptn:cond_independence} we rewrite equation (\ref{eq:joint_prob}) as follows
-	\begin{align*}
-		\mathcal{P}&(X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C) \\
-			&= \mathcal{P}(Y_{n + 1}\in C)\prod_{j = 1}^{n}\mathcal{P}(X_{j}\in B_{j}|Y_{n + 1}\in C).
-	\end{align*}
-  Let $\alpha(B_{1}, \ldots, B_{n}, C)=\mathcal{P}(X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}, Y_{n + 1}\in C)$. Using 
-  Assumption \ref{assmptn:joint_prob} we get
-	\begin{align*}
-		\mathcal{P}&(Y_{n + 1}\in C|X_{1}\in B_{1}, \ldots, X_{n}\in B_{n}) \\
-			&= \alpha(B_{1}, \ldots, B_{n}, C)^{-1}\mathcal{P}(Y_{n + 1}\in C)\prod_{j = 1}^{n}\mathcal{P}(X_{j}\in B_{j}|Y_{n + 1}\in C).
-	\end{align*}
-  Consequently we rewrite the decision rule (\ref{eq:dec_rule}) as follows
-	\begin{align}\label{eq:dec_rule_updated_I}
-		\argmax_{y\in\{0, 1\}} \mathcal{P}(Y_{n + 1} = y) \prod_{j = 1}^{n}\mathcal{P}(X_{j}=x_{j}|Y_{n + 1}=y).
-	\end{align}
+Consequently we can rewrite the decision rule (\ref{eq:dec_rule}) as follows
+\begin{align}\label{eq:dec_rule_updated_I}
+	\argmax_{y\in C} \mathcal{P}(Y = y) \prod_{j = 1}^{d}\mathcal{P}(X_{j}=x_{j} | Y = y).
+\end{align}
   
-	
+\subsection{Bernoulli naive Bayes}
+
+	Let us assume that for all $1\leq j\leq d$, all $y\in C$ and all $t\in\{0, 1\}$ it holds
+	\begin{align*}
+		\mathcal{P}(X_{j} = t | Y = y) = p_{y, j}^{t} (1 - p_{y, t})^{1 - t},
+	\end{align*}
+	where $p_{y, j}\in [0, 1]$ refers to the probability of the conditional event $X_{j}=t$, given $Y=y$. Then we have
+	\begin{align*}
+	 	\mathcal{P}&(Y = y) \prod_{j = 1}^{d}\mathcal{P}(X_{j} = x_{j} | Y = y) \\
+			&= \mathcal{P}(Y = y) \prod_{j = 1}^{d} p_{y, j}^{x_{j}} (1 - p_{y, t})^{1 - x_{j}}.
+	\end{align*}
+	The decision rule (\ref{eq:dec_rule_updated_I}) reads then
+	\begin{align*}
+		\argmax_{y\in C} \mathcal{P}(Y = y) \prod_{j = 1}^{d} p_{y, j}^{x_{j}} (1 - p_{y, t})^{1 - x_{j}},
+	\end{align*}
+	or equivalently
+	\begin{align}\label{eq:dec_rule_updated_II}
+		\argmax_{y\in C} \log(\mathcal{P}(Y = y)) + \sum_{j = 1}^{d}x_{j} \log(p_{y, j}) + (1 - x_{j}) \log(1 - p_{y, t}).
+	\end{align}
+
 \subsection{Towards a numerical method}
 
-	To use decision rule (\ref{eq:dec_rule_updated_I}) in a concrete scenario - as in the task description - we need to make assumptions on
-  the conditional probabilities $\mathcal{P}(X_{j} = x_{j}|Y_{n + 1} = y)$.
-
-  
-	
-	
+	To use decision rule (\ref{eq:dec_rule_updated_II}) in a concrete scenario we need to compute or approximate for every $y$ the
+	probabilities $\mathcal{P}(Y = y)$ and for every $j$ and every $y$ the success probabilities $p_{y, j}$. Assuming that we have
+	realisations of iid random variables $X^{(1)}, \ldots, X^{(n)}\sim\mathcal{P}_{X}$ we approximate these terms by means of 
+	appropriate relative frequencies. To avoid the so called zero probability problem, we apply Laplace smoothing to obtain 
+	approximations of $p_{y, j}$.  
 

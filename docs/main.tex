@@ -4,6 +4,7 @@
 
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{graphicx}
 
 
 % %%% title page
@@ -15,11 +16,14 @@
 
 % %%% define custom theorems
 \newtheorem{myAssmptn}{Assumption}[section]
-
+\newtheorem{myRmrk}{Remark}[section]
 
 % %%% define custom commands
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\myCmmnt}[1]{}
+
 
 % %%% main document
 
@@ -29,12 +33,16 @@
 
     \tableofcontents
     \newpage
-    \section{Bayes classification}
+    \section{Bayes classification}\label{sctn:bayes_classification}
         \input{bayes_classification}
         \newpage
 
+		\section{Problem solution}
+			\input{problem_solution}
+			\newpage
+
     \section{Numerical results}
-%        \input{numerical_results}
+        \input{numerical_results}
         \newpage
 
     \bibliographystyle{plain}

@@ -1,0 +1,30 @@
+To tackle the classification problem specified in the task description, we use the approach discussed in Section \ref{sctn:bayes_classification}. To apply this methodology we discretise the problem as follows:
+\begin{enumerate}
+	\item Let $m,n \in\mathbb{N}$ and let $0 = t_{1} < t_{2} < \ldots < t_{m} = 1$, 
+		$0 = s_{1} < s_{2} < \ldots < s_{n} = 1$ be partitions of $[0, 1]$. For every $1\leq i\leq m - 1$, 
+		$1\leq j\leq n - 1$ define  
+		\begin{align*}
+			Q_{i, j} = 
+			\begin{cases}
+				[t_{i}, t_{i + 1})\times[s_{j}, s_{j + 1}) & \text{ if } 1\leq i < m - 1, 1\leq j < n - 1,\\
+				[t_{i}, t_{i + 1}]\times[s_{j}, s_{j + 1}] & \text{ else }
+			\end{cases}.
+		\end{align*}
+	\item Let $I=[0, 1]^{2}$, let $x\in I$ and let $N = m\cdot n$. Let us denote by $e_{k}\in\mathbb{R}^{N}$ 
+		the $k$-th canonical basis vector in $\mathbb{R}^{N}$. Let $\varphi:I\rightarrow\mathbb{N}$ defined via
+		\begin{align*}
+			\varphi(x) = i\cdot j,
+		\end{align*}
+		where $i, j$ are such that $x\in Q_{i. j}$. 
+\end{enumerate}
+
+Let $L\in\mathbb{N}$ and let $S\subset I$. Let further $\{(x_{l}, y_{l})\in I\times C\}_{l = 1}^{L}$ be the set of labeled data as in the task description, where $C=\{0, 1\}$ and the labels $y_{l}$ are assigned according to the rule
+\begin{align*}
+	y_{l} = 
+	\begin{cases}
+		1 & \text{ if } x_{l}\in S, \\
+		0 & \text{ else}
+	\end{cases}.
+\end{align*}
+Then we apply the Bernoulli naive Bayes classification scheme onto the set $\{(e_{\varphi(x_{l})}, y_{l})\in\mathbb{R}^{N}\times C\}_{l = 1}^{L}$ to solve the addressed problem. 
+
